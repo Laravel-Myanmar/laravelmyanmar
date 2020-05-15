@@ -6,13 +6,13 @@ use Wink\WinkPost;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
-{       
+{
     public function index()
     {
         $posts = WinkPost::with('tags')
             ->live()
             ->orderBy('publish_date', 'DESC')
-            ->simplePaginate(12);
+            ->simplePaginate(20);
 
         return view('blog.index', [
             'posts' => $posts
@@ -21,10 +21,12 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-	$post = WinkPost::with(['tags', 'author'])->whereSlug($slug)->first();
+	    $post = WinkPost::with(['tags', 'author'])->whereSlug($slug)->first();
 
-	if(!$post->published) { return redirect('/wink'); }
+	    if(!$post->published) {
+            return redirect('/wink');
+        }
 
         return view('blog.show', compact('post'));
     }
-}   
+}

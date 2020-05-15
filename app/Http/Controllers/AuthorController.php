@@ -11,7 +11,7 @@ class AuthorController extends Controller
     {
         $author = WinkAuthor::with('posts')->whereSlug($slug)->firstOrFail();
 
-	$posts = $author->posts()->paginate(12);
+        $posts = $author->posts()->paginate(20);
 
         return view('author.show', compact('author', 'posts'));
     }
